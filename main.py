@@ -222,14 +222,14 @@ def path(finalNode:str, stdscr):
     if(firstMax <= secondMax):
         pathAndreinaSum = graphA.nodes_dict[destination].distMin
         pathJavierSum = graphJ.nodes_dict[destination].distMin
-        resultString = resultString + f'El tiempo mímimo de Javier caminando es de {pathJavierSum} minutos por la siguiente ruta:  \n{shortestPath(graphJ, graphJ.nodes_dict[destination])} \n\nEl tiempo mímimo de Andreina caminando es de {pathAndreinaSum} minutos por la siguiente ruta: \n{shortestPath(graphA, graphA.nodes_dict[destination])}\n\n'
+        resultString = resultString + f'El tiempo mínimo de Javier caminando es de {pathJavierSum} minutos por la siguiente ruta:  \n{shortestPath(graphJ, graphJ.nodes_dict[destination])} \n\nEl tiempo mínimo de Andreína caminando es de {pathAndreinaSum} minutos por la siguiente ruta: \n{shortestPath(graphA, graphA.nodes_dict[destination])}\n\n'
         
         
     else:
         pathAndreinaSum = graphA2.nodes_dict[destination].distMin
         pathJavierSum = graphJ1.nodes_dict[destination].distMin
     
-        resultString = resultString +  f'El tiempo mímimo de Javier caminando es de {pathJavierSum} minutos por la siguiente ruta: \n{shortestPath(graphJ1, graphJ1.nodes_dict[destination])} \n\nEl tiempo mímimo de Andreina caminando es de {pathAndreinaSum} minutos por la siguiente ruta: \n{shortestPath(graphA2, graphA2.nodes_dict[destination])}\n\n'
+        resultString = resultString +  f'El tiempo mínimo de Javier caminando es de {pathJavierSum} minutos por la siguiente ruta: \n{shortestPath(graphJ1, graphJ1.nodes_dict[destination])} \n\nEl tiempo mínimo de Andreína caminando es de {pathAndreinaSum} minutos por la siguiente ruta: \n{shortestPath(graphA2, graphA2.nodes_dict[destination])}\n\n'
     
     maximum(pathJavierSum,pathAndreinaSum, stdscr)
     return 
@@ -283,7 +283,7 @@ def get_dynamic_destination(stdscr):
     while True:
         stdscr.addstr("--- Ingresar Destino Personalizado ---\n")
         stdscr.addstr("La zona es entre la Calle 50 y la 55.\n\n")
-        stdscr.addstr("Ingrese la Calle (ej: 52): ")
+        stdscr.addstr("Ingrese la Calle: ")
         stdscr.refresh()
         calle_str = stdscr.getstr().decode('utf-8').strip()
         
@@ -306,7 +306,7 @@ def get_dynamic_destination(stdscr):
         stdscr.addstr("--- Ingresar Destino Personalizado ---\n")
         stdscr.addstr(f"Calle ingresada: {calle_str}\n")
         stdscr.addstr("La zona es entre la Carrera 10 y la 15.\n\n")
-        stdscr.addstr("Ingrese la Carrera (ej: 14): ")
+        stdscr.addstr("Ingrese la Carrera: ")
         stdscr.refresh()
         carrera_str = stdscr.getstr().decode('utf-8').strip()
 
