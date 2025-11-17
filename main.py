@@ -212,9 +212,9 @@ def path(finalNode:str, stdscr):
     restrictedDijkstra(graphA2, startNodeA, graphJ1.nodes_dict[finalNode].pred, finalNode)
 
 
-    # destination :str = finalNode
+    destination :str = finalNode
     # destination :str = "5011"
-    destination :str = "5113"
+    # destination :str = "5113"
     # print(graphA.nodes_dict)
     firstMax = max(graphA.nodes_dict[destination].distMin, graphJ.nodes_dict[destination].distMin)
     secondMax = max(graphJ1.nodes_dict[destination].distMin, graphA2.nodes_dict[destination].distMin)
@@ -267,7 +267,6 @@ def path(finalNode:str, stdscr):
 
 #         else:
 #             print ("I'm sorry, I didn't get that" + "\n"*5)
-
 
 def get_dynamic_destination(stdscr):
     """
@@ -332,8 +331,14 @@ def get_dynamic_destination(stdscr):
 
 # SE USA MENU 2:
 def menu2():
-    classes = [Brewery, Disco, Bar]
-    nombres = ["Cervecería Mi Rolita", "Discoteca The Darkness", "Bar La Pasión"]
+    #ANTES
+    # classes = [Brewery, Disco, Bar]
+    # nombres = ["Cervecería Mi Rolita", "Discoteca The Darkness", "Bar La Pasión"]
+
+    # AHORA (AÑADE LA LÍNEA 4):
+    classes = [Brewery, Disco, Bar, "INPUT"]
+    nombres = ["Cervecería Mi Rolita", "Discoteca The Darkness", "Bar La Pasión", "Otro Destino (Ingresar)"]
+
     decisiones = ["Ver otro recorrido", "Salir"]
     numeros = [1,0]
     def character(stdscr):
@@ -366,10 +371,38 @@ def menu2():
                     option -= 1
                 elif c == curses.KEY_DOWN and option < len(classes) - 1:
                     option += 1
-            stdscr.erase()
-            resultString += f"El destino escogido por la pareja esta noche será {nombres[option]}\n\n"
-            path("5113", stdscr)
+
+            #ANTES
+            # stdscr.erase()
+            # resultString += f"El destino escogido por la pareja esta noche será {nombres[option]}\n\n"
+            # # path("5113", stdscr)
             # path(classes[option], stdscr)
+
+            # AHORA (REEMPLAZA LO ANTERIOR CON ESTE BLOQUE):
+            stdscr.erase()
+            destino_id_flag = classes[option]
+            destino_nombre = nombres[option]
+
+            final_destination_id = ""  # El ID real que se pasará a path()
+
+            if destino_id_flag == "INPUT":
+                # Si el usuario eligió "Otro Destino", llamamos a nuestra nueva función
+                new_id = get_dynamic_destination(stdscr) 
+                final_destination_id = new_id
+                
+                # Construimos el string de resultado para el destino dinámico
+                resultString += f"El destino escogido por la pareja esta noche será {destino_nombre}:\n"
+                resultString += f"Calle {final_destination_id[0:2]} con Carrera {final_destination_id[2:4]}\n\n"
+            else:
+                # Lógica original para los destinos fijos
+                final_destination_id = destino_id_flag
+                resultString += f"El destino escogido por la pareja esta noche será {destino_nombre}\n\n"
+            
+            # Llamada unificada a path(), que ahora funciona con IDs fijos o dinámicos
+            path(final_destination_id, stdscr)
+            
+            # --- FIN DEL BLOQUE MODIFICADO ---
+
             attributes = {}
             curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
             attributes['normal'] = curses.color_pair(1)
@@ -404,15 +437,7 @@ def menu2():
             
             if not (numeros[option]):
                 bool = False
-
                 
-
-                
-            
-            
-            
-                
-
     def menucito():
 
         curses.wrapper(character)
