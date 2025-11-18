@@ -36,8 +36,9 @@ class GraphVisualizer:
                 nodes.append(f"{calle}{carrera}")
         return nodes
     
-    def visualize(self, graphJ, graphA, destination, path_javier, path_andreina):
-        """Visualiza el grafo con las rutas"""
+    def visualize(self, graphJ, graphA, destination, path_javier, path_andreina,
+                  timeJ, timeA, recommendation_text): # <--- PARÁMETROS AGREGADOS
+        """Visualiza el grafo con las rutas, incluyendo tiempos y recomendación."""
         graph_data = self.extract_graph_data(graphJ)
         
         G = nx.Graph()
@@ -65,41 +66,48 @@ class GraphVisualizer:
         
         # Dibujar grafo base
         nx.draw_networkx_nodes(G, pos, node_color='lightblue', 
-                              node_size=400, alpha=0.7)
+                                 node_size=400, alpha=0.7)
         nx.draw_networkx_edges(G, pos, edge_color='gray', 
-                              alpha=0.4, width=1)
+                                 alpha=0.4, width=1)
         nx.draw_networkx_labels(G, pos, font_size=7)
         
         # Resaltar puntos importantes
         for node_id, (label, color) in LANDMARKS.items():
             if node_id in G.nodes():
                 nx.draw_networkx_nodes(G, pos, nodelist=[node_id], 
-                                      node_color=color, node_size=600,
-                                      label=label)
+                                         node_color=color, node_size=600,
+                                         label=label)
         
         # Dibujar rutas
         if path_javier:
             path_edges_j = [(path_javier[i], path_javier[i+1]) 
-                           for i in range(len(path_javier)-1)]
+                             for i in range(len(path_javier)-1)]
             nx.draw_networkx_edges(G, pos, edgelist=path_edges_j, 
-                                  edge_color='red', width=3, alpha=0.8,
-                                  label='Ruta Javier')
+                                     edge_color='red', width=3, alpha=0.8,
+                                     label='Ruta Javier')
         
         if path_andreina:
             path_edges_a = [(path_andreina[i], path_andreina[i+1]) 
-                           for i in range(len(path_andreina)-1)]
+                             for i in range(len(path_andreina)-1)]
             nx.draw_networkx_edges(G, pos, edgelist=path_edges_a, 
-                                  edge_color='green', width=3, alpha=0.8,
-                                  label='Ruta Andreína')
+                                     edge_color='green', width=3, alpha=0.8,
+                                     label='Ruta Andreína')
         
         # Destino
         if destination in G.nodes():
             nx.draw_networkx_nodes(G, pos, nodelist=[destination], 
-                                  node_color='yellow', node_size=700,
-                                  edgecolors='black', linewidths=2,
-                                  label='Destino')
+                                     node_color='yellow', node_size=700,
+                                     edgecolors='black', linewidths=2,
+                                     label='Destino')
         
-        plt.title("Mapa de Bogotá - Rutas de Javier y Andreína", fontsize=14)
+        # --- TÍTULO MODIFICADO PARA INCLUIR TIEMPOS Y RECOMENDACIÓN ---
+        title = (
+            f"Mapa de Rutas Óptimas | Destino: C{destination[:2]} C{destination[2:]}\n"
+            f"Javier (Rojo): {timeJ} min | Andreína (Verde): {timeA} min\n"
+            f"RECOMENDACIÓN: {recommendation_text}"
+        )
+        
+        plt.title(title, fontsize=12, fontweight='bold')
         plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
         plt.axis('off')
         plt.tight_layout()
