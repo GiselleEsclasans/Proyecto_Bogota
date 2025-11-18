@@ -16,7 +16,7 @@ class TkInterface:
         # Destination options
         self.classes = ["5012", "5014", "5411", "INPUT"]
         self.names = ["🍻 Cervecería Mi Rolita", "💃 Discoteca The Darkness",
-                      "🎵 Bar La Pasión", "📍 Otro Destino (Ingresar)"]
+                      "🎵 Bar La Pasión", "📍 Otro Destino "]
 
         self.root = None
         self.result_text = None
