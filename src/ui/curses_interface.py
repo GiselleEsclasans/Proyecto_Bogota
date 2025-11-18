@@ -73,10 +73,10 @@ class CursesInterface:
         self.resultString += "Para lograr llegar juntos es importante que "
         if a > b:
             c = str(a - b)
-            self.resultString += f"Andreína salga {c} minutos después de Javier"
+            self.resultString += f"Javier salga {c} minutos antes que Andreína"
         elif a < b:
             c = str(b - a)
-            self.resultString += f"Javier salga {c} minutos después de Andreína"
+            self.resultString += f"Andreína salga {c} minutos antes que Javier"
         else:
             self.resultString += "ambos salgan al mismo tiempo"
     
