@@ -22,7 +22,6 @@ class TkInterface:
         self.result_text = None
         self.style = None
         
-   
         self.colors = {
             'primary': '#2E86AB',
             'secondary': '#A23B72',
@@ -39,26 +38,25 @@ class TkInterface:
         self.style = ttk.Style()
         self.style.theme_use('clam')
         
-   
         self.style.configure('Primary.TButton', 
-                           background=self.colors['primary'],
-                           foreground='white',
-                           font=('Arial', 10, 'bold'),
-                           padding=(15, 8))
+                             background=self.colors['primary'],
+                             foreground='white',
+                             font=('Arial', 10, 'bold'),
+                             padding=(15, 8))
         
         self.style.configure('Secondary.TButton',
-                           background=self.colors['secondary'],
-                           foreground='white',
-                           font=('Arial', 10),
-                           padding=(12, 6))
+                             background=self.colors['secondary'],
+                             foreground='white',
+                             font=('Arial', 10),
+                             padding=(12, 6))
         
         self.style.configure('Title.TLabel',
-                           font=('Arial', 16, 'bold'),
-                           foreground=self.colors['text_dark'])
+                             font=('Arial', 16, 'bold'),
+                             foreground=self.colors['text_dark'])
         
         self.style.configure('Subtitle.TLabel',
-                           font=('Arial', 12, 'bold'),
-                           foreground=self.colors['primary'])
+                             font=('Arial', 12, 'bold'),
+                             foreground=self.colors['primary'])
 
     def _get_dynamic_destination(self):
         """Diálogo mejorado para ingresar destino personalizado"""
@@ -72,7 +70,7 @@ class TkInterface:
         dialog.geometry("+%d+%d" % (self.root.winfo_x() + 100, self.root.winfo_y() + 100))
         
         ttk.Label(dialog, text="Ingrese las coordenadas", 
-                 style='Subtitle.TLabel').pack(pady=10)
+                  style='Subtitle.TLabel').pack(pady=10)
         
         # Frame para calle
         calle_frame = ttk.Frame(dialog)
@@ -80,8 +78,8 @@ class TkInterface:
         ttk.Label(calle_frame, text="Calle (50-55):").pack(side='left')
         calle_var = tk.StringVar()
         calle_combo = ttk.Combobox(calle_frame, textvariable=calle_var,
-                                  values=[str(i) for i in range(50, 56)], 
-                                  state="readonly", width=8)
+                                     values=[str(i) for i in range(50, 56)], 
+                                     state="readonly", width=8)
         calle_combo.pack(side='right')
         calle_combo.set('50')
         
@@ -91,12 +89,12 @@ class TkInterface:
         ttk.Label(carrera_frame, text="Carrera (10-15):").pack(side='left')
         carrera_var = tk.StringVar()
         carrera_combo = ttk.Combobox(carrera_frame, textvariable=carrera_var,
-                                    values=[str(i) for i in range(10, 16)], 
-                                    state="readonly", width=8)
+                                     values=[str(i) for i in range(10, 16)], 
+                                     state="readonly", width=8)
         carrera_combo.pack(side='right')
         carrera_combo.set('10')
         
-        result = [None]  # Para capturar el resultado
+        result = [None] 	# Para capturar el resultado
         
         def on_ok():
             if calle_var.get() and carrera_var.get():
@@ -112,9 +110,9 @@ class TkInterface:
         btn_frame = ttk.Frame(dialog)
         btn_frame.pack(pady=15)
         ttk.Button(btn_frame, text="Aceptar", command=on_ok,
-                  style='Primary.TButton').pack(side='left', padx=5)
+                   style='Primary.TButton').pack(side='left', padx=5)
         ttk.Button(btn_frame, text="Cancelar", command=on_cancel,
-                  style='Secondary.TButton').pack(side='left', padx=5)
+                   style='Secondary.TButton').pack(side='left', padx=5)
         
         dialog.wait_window()
         return result[0]
@@ -160,11 +158,11 @@ class TkInterface:
         """Aplica colores y estilos al texto"""
         # Configurar tags
         self.result_text.tag_configure('destino', foreground=self.colors['primary'], 
-                                      font=('Arial', 11, 'bold'))
+                                     font=('Arial', 11, 'bold'))
         self.result_text.tag_configure('javier', foreground='#E74C3C')
         self.result_text.tag_configure('andreina', foreground='#27AE60')
         self.result_text.tag_configure('recomendacion', foreground=self.colors['warning'],
-                                      font=('Arial', 10, 'bold'))
+                                     font=('Arial', 10, 'bold'))
         
         # Aplicar tags
         content = self.result_text.get('1.0', tk.END)
@@ -192,7 +190,7 @@ class TkInterface:
                 end_idx = current_pos + len(line)
                 self.result_text.tag_add('recomendacion', f'1.0+{start_idx}c', f'1.0+{end_idx}c')
             
-            current_pos += len(line) + 1  
+            current_pos += len(line) + 1 	
 
     def on_show_route(self):
         """Manejador mejorado para calcular rutas"""
@@ -244,33 +242,39 @@ class TkInterface:
     def _display_results(self, graphJ, graphA, final_id, dest_name, timeJ, timeA):
         """Muestra los resultados del cálculo"""
         res = f"📍 DESTINO: {dest_name.replace('🍻', '').replace('💃', '').replace('🎵', '').replace('📍', '').strip()}\n"
-        res += f"   Coordenadas: Calle {final_id[0:2]} con Carrera {final_id[2:4]}\n\n"
+        res += f" 	 Coordenadas: Calle {final_id[0:2]} con Carrera {final_id[2:4]}\n\n"
         
         res += "👨 JAVIER\n"
-        res += f"   ⏱️  Tiempo: {timeJ} minutos\n"
-        res += "   🛣️  Ruta:\n   "
-        res += self.finder.shortest_path(graphJ, graphJ.nodes_dict[final_id]).replace('==>', '\n   ==>') + '\n\n'
+        res += f" 	 ⏱️ 	Tiempo: {timeJ} minutos\n"
+        res += " 	 🛣️ 	Ruta:\n 	 "
+        res += self.finder.shortest_path(graphJ, graphJ.nodes_dict[final_id]).replace('==>', '\n 	 ==>') + '\n\n'
         
         res += "👩 ANDREÍNA\n"
-        res += f"   ⏱️  Tiempo: {timeA} minutos\n"
-        res += "   🛣️  Ruta:\n   "
-        res += self.finder.shortest_path(graphA, graphA.nodes_dict[final_id]).replace('==>', '\n   ==>') + '\n\n'
+        res += f" 	 ⏱️ 	Tiempo: {timeA} minutos\n"
+        res += " 	 🛣️ 	Ruta:\n 	 "
+        res += self.finder.shortest_path(graphA, graphA.nodes_dict[final_id]).replace('==>', '\n 	 ==>') + '\n\n'
 
         # Recomendación
         res += "💡 RECOMENDACIÓN DE SALIDA\n"
         if timeJ > timeA:
-            res += f"   Andreína debe salir {timeJ - timeA} minutos después de Javier\n"
+            recommendation_text = f"Javier debe salir {timeJ - timeA} minutos antes que Andreína"
+            res += f"   {recommendation_text}\n"
         elif timeA > timeJ:
-            res += f"   Javier debe salir {timeA - timeJ} minutos después de Andreína\n"
+            recommendation_text = f"Andreína debe salir {timeA - timeJ} minutos antes que Javier"
+            res += f"   {recommendation_text}\n"
         else:
-            res += "   Ambos deben salir al mismo tiempo\n"
+            recommendation_text = "Ambos deben salir al mismo tiempo"
+            res += f"   {recommendation_text}\n"
 
         self._show_result(res)
 
-        # Guardar para visualización
+        # Guardar datos para visualización
         self._last_graphJ = graphJ
         self._last_graphA = graphA
         self._last_destination = final_id
+        self._last_timeJ = timeJ
+        self._last_timeA = timeA
+        self._last_recommendation = recommendation_text
         
         # Habilitar botón de visualización
         self.visualize_btn.config(state='normal')
@@ -288,15 +292,23 @@ class TkInterface:
             return
         
         response = messagebox.askyesno("Visualizar Mapa", 
-                                      "¿Desea abrir la visualización del mapa?\n\n"
-                                      "Esto abrirá una ventana separada con la representación gráfica de las rutas.")
+                                     "¿Desea abrir la visualización del mapa?\n\n"
+                                     "Esto abrirá una ventana separada con la representación gráfica de las rutas.")
         if response:
             try:
                 path_javier = self.visualizer.path_to_node_list(self._last_graphJ, self._last_destination)
                 path_andreina = self.visualizer.path_to_node_list(self._last_graphA, self._last_destination)
                 
-                self.visualizer.visualize(self._last_graphJ, self._last_graphA, 
-                                        self._last_destination, path_javier, path_andreina)
+                self.visualizer.visualize(
+                    self._last_graphJ, 
+                    self._last_graphA, 
+                    self._last_destination, 
+                    path_javier, 
+                    path_andreina,
+                    self._last_timeJ, # <--- PASAR TIEMPOS
+                    self._last_timeA, # <--- PASAR TIEMPOS
+                    self._last_recommendation # <--- PASAR RECOMENDACIÓN
+                )
             except Exception as e:
                 messagebox.showerror("Error de Visualización", 
                                    f"No se pudo generar la visualización:\n{str(e)}")
@@ -308,20 +320,20 @@ class TkInterface:
         
         # Título principal
         title_label = ttk.Label(header_frame, 
-                               text="🗺️ Sistema de Rutas - Bogotá", 
-                               style='Title.TLabel')
+                                 text="🗺️ Sistema de Rutas - Bogotá", 
+                                 style='Title.TLabel')
         title_label.pack(pady=(0, 5))
         
         # Subtítulo
         subtitle_label = ttk.Label(header_frame,
-                                  text="Calcula las rutas óptimas para Javier y Andreína",
-                                  style='Subtitle.TLabel')
+                                     text="Calcula las rutas óptimas para Javier y Andreína",
+                                     style='Subtitle.TLabel')
         subtitle_label.pack()
 
     def create_destination_section(self, parent):
         """Crea la sección de selección de destino"""
         dest_frame = ttk.LabelFrame(parent, text=" 🎯 Seleccionar Destino ", 
-                                   padding="15", style='Card.TFrame')
+                                     padding="15", style='Card.TFrame')
         dest_frame.pack(fill='x', padx=20, pady=10)
         
         ttk.Label(dest_frame, text="Elija un destino de la lista:").pack(anchor='w')
@@ -331,11 +343,11 @@ class TkInterface:
         listbox_frame.pack(fill='x', pady=10)
         
         self.listbox = tk.Listbox(listbox_frame, height=6, font=('Arial', 10),
-                                 selectbackground=self.colors['primary'])
+                                     selectbackground=self.colors['primary'])
         self.listbox.pack(side='left', fill='both', expand=True)
         
         scrollbar = ttk.Scrollbar(listbox_frame, orient='vertical', 
-                                 command=self.listbox.yview)
+                                     command=self.listbox.yview)
         scrollbar.pack(side='right', fill='y')
         self.listbox.config(yscrollcommand=scrollbar.set)
         
@@ -359,26 +371,26 @@ class TkInterface:
         btn_frame.pack(fill='x')
         
         self.calculate_btn = ttk.Button(btn_frame, text="🚀 Calcular Ruta Óptima", 
-                                       command=self.on_show_route,
-                                       style='Primary.TButton')
+                                         command=self.on_show_route,
+                                         style='Primary.TButton')
         self.calculate_btn.pack(side='left', padx=(0, 10))
         
         self.visualize_btn = ttk.Button(btn_frame, text="📊 Visualizar Mapa", 
-                                       command=self.on_visualize,
-                                       style='Secondary.TButton')
+                                         command=self.on_visualize,
+                                         style='Secondary.TButton')
         self.visualize_btn.pack(side='left', padx=(0, 10))
-        self.visualize_btn.config(state='disabled')  # Inicialmente deshabilitado
+        self.visualize_btn.config(state='disabled') 	# Inicialmente deshabilitado
         
         ttk.Button(btn_frame, text="🔄 Limpiar", 
-                  command=self.clear_results).pack(side='left', padx=(0, 10))
+                   command=self.clear_results).pack(side='left', padx=(0, 10))
         
         ttk.Button(btn_frame, text="❌ Salir", 
-                  command=self.root.quit).pack(side='right')
+                   command=self.root.quit).pack(side='right')
 
     def create_results_section(self, parent):
         """Crea la sección de resultados"""
         results_frame = ttk.LabelFrame(parent, text=" 📋 Resultados ", 
-                                      padding="15", style='Card.TFrame')
+                                       padding="15", style='Card.TFrame')
         results_frame.pack(fill='both', expand=True, padx=20, pady=10)
         
         self.result_text = ScrolledText(results_frame, width=80, height=20, 
@@ -394,6 +406,11 @@ class TkInterface:
             del self._last_graphJ
         if hasattr(self, '_last_graphA'):
             del self._last_graphA
+        # Limpiar atributos de tiempo y recomendación
+        if hasattr(self, '_last_timeJ'): del self._last_timeJ
+        if hasattr(self, '_last_timeA'): del self._last_timeA
+        if hasattr(self, '_last_recommendation'): del self._last_recommendation
+            
         self.visualize_btn.config(state='disabled')
 
     def build_ui(self):
@@ -453,4 +470,3 @@ El sistema calculará los mejores caminos para:
             # Clean up
             if hasattr(self, 'root'):
                 self.root.quit()
-
