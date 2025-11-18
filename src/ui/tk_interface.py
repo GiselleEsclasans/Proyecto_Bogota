@@ -259,9 +259,9 @@ class TkInterface:
         # Recomendación
         res += "💡 RECOMENDACIÓN DE SALIDA\n"
         if timeJ > timeA:
-            res += f"   Andreína debe salir {timeJ - timeA} minutos después de Javier\n"
+            res += f"   Javier debe salir {timeJ - timeA} minutos antes que Andreína\n"
         elif timeA > timeJ:
-            res += f"   Javier debe salir {timeA - timeJ} minutos después de Andreína\n"
+            res += f"   Andreína debe salir {timeA - timeJ} minutos antes que Javier\n"
         else:
             res += "   Ambos deben salir al mismo tiempo\n"
 
