@@ -42,7 +42,7 @@ class CursesInterface:
             stdscr.getch()
             stdscr.erase()
 
-        # Obtener carrera  
+        # Obtener carrera 	
         stdscr.erase()
         while True:
             stdscr.addstr("--- Ingresar Destino Personalizado ---\n")
@@ -90,7 +90,7 @@ class CursesInterface:
             # Menú de selección de destino
             classes = ["5012", "5014", "5411", "INPUT"]
             nombres = ["Cervecería Mi Rolita", "Discoteca The Darkness", 
-                      "Bar La Pasión", "Otro Destino (Ingresar)"]
+                       "Bar La Pasión", "Otro Destino (Ingresar)"]
             
             decisiones = ["Ver otro recorrido", "Salir"]
             numeros = [1, 0]
@@ -138,12 +138,21 @@ class CursesInterface:
             graphJ, graphA, timeJ, timeA = self.finder.find_optimal_paths(final_destination_id)
             
             # Añadir información de rutas al resultString
-            self.resultString += f'El tiempo mínimo de Javier caminando es de {timeJ} minutos por la siguiente ruta:  \n'
+            self.resultString += f'El tiempo mínimo de Javier caminando es de {timeJ} minutos por la siguiente ruta: 	\n'
             self.resultString += self.finder.shortest_path(graphJ, graphJ.nodes_dict[final_destination_id]) + '\n\n'
             self.resultString += f'El tiempo mínimo de Andreína caminando es de {timeA} minutos por la siguiente ruta: \n'
             self.resultString += self.finder.shortest_path(graphA, graphA.nodes_dict[final_destination_id]) + '\n\n'
             
             self.maximum(timeJ, timeA)
+            
+            # --- CÁLCULO DE RECOMENDACIÓN PARA VISUALIZACIÓN ---
+            recommendation_text = ""
+            if timeJ > timeA:
+                recommendation_text = f"Andreína debe salir {timeJ - timeA} minutos después de Javier"
+            elif timeA > timeJ:
+                recommendation_text = f"Javier debe salir {timeA - timeJ} minutos después de Andreína"
+            else:
+                recommendation_text = "Ambos deben salir al mismo tiempo"
             
             # Preguntar por visualización
             stdscr.addstr("\n\n¿Desea ver la visualización del grafo? (s/n): ")
@@ -151,7 +160,18 @@ class CursesInterface:
             if stdscr.getch() in [ord('s'), ord('S')]:
                 path_javier = self.visualizer.path_to_node_list(graphJ, final_destination_id)
                 path_andreina = self.visualizer.path_to_node_list(graphA, final_destination_id)
-                self.visualizer.visualize(graphJ, graphA, final_destination_id, path_javier, path_andreina)
+                
+                # Pasamos los nuevos datos al visualizador
+                self.visualizer.visualize(
+                    graphJ, 
+                    graphA, 
+                    final_destination_id, 
+                    path_javier, 
+                    path_andreina,
+                    timeJ, 
+                    timeA,
+                    recommendation_text
+                )
 
             # Menú de decisiones
             attributes = {}
