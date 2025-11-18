@@ -36,8 +36,7 @@ class GraphVisualizer:
                 nodes.append(f"{calle}{carrera}")
         return nodes
     
-    def visualize(self, graphJ, graphA, destination, path_javier, path_andreina,
-                  timeJ, timeA, recommendation_text): # <--- PARÁMETROS AGREGADOS
+    def visualize(self, graphJ, graphA, destination, path_javier, path_andreina, timeJ=None, timeA=None, recommendation_text=None):
         """Visualiza el grafo con las rutas, incluyendo tiempos y recomendación."""
         graph_data = self.extract_graph_data(graphJ)
         
@@ -47,13 +46,7 @@ class GraphVisualizer:
         
         for edge in graph_data['edges']:
             G.add_edge(edge[0], edge[1], weight=edge[2])
-        
-        # Posiciones basadas en coordenadas
-        # Queremos: norte = Calle 55 en la parte superior, sur = Calle 50 en la parte inferior,
-        #           izquierda = Carrera 15 (oeste), derecha = Carrera 10 (este).
-        # Para lograr esto en un sistema de coordenadas donde X crece a la derecha y Y crece hacia arriba:
-        # - X debe ser mayor para Carrera 10 y menor para Carrera 15 -> x = 15 - carrera
-        # - Y debe ser mayor para Calle 55 y menor para Calle 50 -> y = calle - 50
+
         pos = {}
         for node in G.nodes():
             calle = int(node[:2])
@@ -100,14 +93,16 @@ class GraphVisualizer:
                                      edgecolors='black', linewidths=2,
                                      label='Destino')
         
-        # --- TÍTULO MODIFICADO PARA INCLUIR TIEMPOS Y RECOMENDACIÓN ---
-        title = (
-            f"Mapa de Rutas Óptimas | Destino: C{destination[:2]} C{destination[2:]}\n"
-            f"Javier (Rojo): {timeJ} min | Andreína (Verde): {timeA} min\n"
-            f"RECOMENDACIÓN: {recommendation_text}"
-        )
+        # Título con información de tiempos y recomendación
+        title = f"Mapa de Rutas Óptimas - Destino: Calle {destination[:2]} con Carrera {destination[2:]}"
         
-        plt.title(title, fontsize=12, fontweight='bold')
+        if timeJ is not None and timeA is not None:
+            title += f"\nJavier (Rojo): {timeJ} min | Andreína (Verde): {timeA} min"
+        
+        if recommendation_text:
+            title += f"\n RECOMENDACIÓN: {recommendation_text}"
+        
+        plt.title(title, fontsize=11, fontweight='bold', pad=20)
         plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
         plt.axis('off')
         plt.tight_layout()

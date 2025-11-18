@@ -145,12 +145,11 @@ class CursesInterface:
             
             self.maximum(timeJ, timeA)
             
-            # --- CÁLCULO DE RECOMENDACIÓN PARA VISUALIZACIÓN ---
-            recommendation_text = ""
+            # Calcular recomendación para visualización
             if timeJ > timeA:
-                recommendation_text = f"Andreína debe salir {timeJ - timeA} minutos después de Javier"
+                recommendation_text = f"Javier debe salir {timeJ - timeA} minutos antes que Andreína"
             elif timeA > timeJ:
-                recommendation_text = f"Javier debe salir {timeA - timeJ} minutos después de Andreína"
+                recommendation_text = f"Andreína debe salir {timeA - timeJ} minutos antes que Javier"
             else:
                 recommendation_text = "Ambos deben salir al mismo tiempo"
             

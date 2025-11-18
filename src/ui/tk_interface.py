@@ -254,17 +254,17 @@ class TkInterface:
         res += " 	 🛣️ 	Ruta:\n 	 "
         res += self.finder.shortest_path(graphA, graphA.nodes_dict[final_id]).replace('==>', '\n 	 ==>') + '\n\n'
 
-        # Recomendación de Salida
-        recommendation_text = ""
+        # Recomendación
         res += "💡 RECOMENDACIÓN DE SALIDA\n"
         if timeJ > timeA:
-            res += f"   Javier debe salir {timeJ - timeA} minutos antes que Andreína\n"
+            recommendation_text = f"Javier debe salir {timeJ - timeA} minutos antes que Andreína"
+            res += f"   {recommendation_text}\n"
         elif timeA > timeJ:
-            res += f"   Andreína debe salir {timeA - timeJ} minutos antes que Javier\n"
+            recommendation_text = f"Andreína debe salir {timeA - timeJ} minutos antes que Javier"
+            res += f"   {recommendation_text}\n"
         else:
             recommendation_text = "Ambos deben salir al mismo tiempo"
-            
-        res += f" 	 {recommendation_text}\n"
+            res += f"   {recommendation_text}\n"
 
         self._show_result(res)
 
