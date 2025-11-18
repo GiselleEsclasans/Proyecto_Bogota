@@ -48,11 +48,18 @@ class GraphVisualizer:
             G.add_edge(edge[0], edge[1], weight=edge[2])
         
         # Posiciones basadas en coordenadas
+        # Queremos: norte = Calle 55 en la parte superior, sur = Calle 50 en la parte inferior,
+        #           izquierda = Carrera 15 (oeste), derecha = Carrera 10 (este).
+        # Para lograr esto en un sistema de coordenadas donde X crece a la derecha y Y crece hacia arriba:
+        # - X debe ser mayor para Carrera 10 y menor para Carrera 15 -> x = 15 - carrera
+        # - Y debe ser mayor para Calle 55 y menor para Calle 50 -> y = calle - 50
         pos = {}
         for node in G.nodes():
             calle = int(node[:2])
             carrera = int(node[2:])
-            pos[node] = (carrera, 55 - calle)
+            x = 15 - carrera
+            y = calle - 50
+            pos[node] = (x, y)
         
         plt.figure(figsize=(14, 10))
         
